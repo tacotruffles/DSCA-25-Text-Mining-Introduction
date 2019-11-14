@@ -61,12 +61,12 @@ tidy_books
 
 ```{r}
 tidy_books <- tidy_books %>%
-  anti_join(stop_words)
+  anti_join(stop_words) # remove stop
 
 tidy_books
 ```
 
-
+Most used words
 ```{r}
 tidy_books %>%
   count(word, sort = TRUE) 
@@ -86,7 +86,7 @@ tidy_books %>%
 
 
 ```{r}
-hgwells <- gutenberg_download(c(35, 36, 5230, 159))
+hgwells <- gutenberg_download(c(35, 36, 5230, 159)) # HG Wells indiceis
 ```
 
 ```{r}
@@ -104,7 +104,7 @@ tidy_hgwells %>%
 
 
 ```{r}
-bronte <- gutenberg_download(c(1260, 768, 969, 9182, 767))
+bronte <- gutenberg_download(c(1260, 768, 969, 9182, 767)) # BRont's books
 ```
 
 
@@ -129,7 +129,7 @@ frequency <- bind_rows(mutate(tidy_bronte, author = "Brontë Sisters"),
   mutate(word = str_extract(word, "[a-z']+")) %>%
   count(author, word) %>%
   group_by(author) %>%
-  mutate(proportion = n / sum(n)) %>% 
+  mutate(proportion = n / sum(n)) %>%  # how frequent a word was used
   select(-n) %>% 
   spread(author, proportion) %>% 
   gather(author, proportion, `Brontë Sisters`:`H.G. Wells`)
